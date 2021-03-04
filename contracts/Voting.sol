@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0
+///SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.7.4;
 pragma experimental ABIEncoderV2;
 
@@ -12,14 +12,16 @@ import "./Ownable.sol";
  */
 
 contract Voting is Ownable {
-    uint8 public winningProposalId;
+    uint8[] public winningProposalId;
 
+    //increment d'ids
     uint8 proposalIds;
 
     struct Voter {
         bool isRegistered;
         address _address;
         bool hasVoted;
+        //à voir l'utilité :
         uint256 votedProposalId;
     }
 
@@ -29,8 +31,6 @@ contract Voting is Ownable {
         string description;
         uint256 voteCount;
     }
-
-    mapping(address => Voter) public voters; // liste électorale
 
     mapping(address => Voter) public whiteList;
 
@@ -56,7 +56,7 @@ contract Voting is Ownable {
     event VotingSessionStarted();
     event VotingSessionEnded();
     event Voted(address voter, uint256 proposalId);
-    event VotesTallied();
+    event VotesTallied(uint8[] _winningProposals);
     event WorkflowStatusChange(
         WorkflowStatus previousStatus,
         WorkflowStatus newStatus
@@ -66,12 +66,9 @@ contract Voting is Ownable {
         emit NewVotingSystem();
     }
 
-    function getWinningProposal()
-        public
-        view
-        returns (Proposal memory proposal)
-    {
-        return proposals[winningProposalId];
+    function getWinningProposal() public view returns (Proposal memory proposal){
+      //a voir en cas de plusieurs gagnnats boucle ->
+        return proposals[winningProposalId[0]];
     }
 
     ///@param _address à ajouter à la whitelist
@@ -82,7 +79,6 @@ contract Voting is Ownable {
         emit VoterRegistered(_address);
     }
 
-    ///@dev verifier le gas
     function deleteVoter(address _address) public onlyOwner {
         delete whiteList[_address];
     }
@@ -116,9 +112,10 @@ contract Voting is Ownable {
     ///@param _description est le nom de la proposition
     function addProposal(string memory _description) public whiteListed {
         //obligation d'être dans le workflow correspondant
+        //deux propositions identiques sont possibles à voir...
         require(status == WorkflowStatus.ProposalsRegistrationStarted);
         Proposal memory newProposal =
-            Proposal(proposalIds, msg.sender, _description, 0);
+        Proposal(proposalIds, msg.sender, _description, 0);
         proposals[proposalIds] = newProposal;
         emit ProposalRegistered(proposalIds);
         proposalIds++;
@@ -126,6 +123,10 @@ contract Voting is Ownable {
 
     function deleteProposal(uint256 _id) public whiteListed {
         require(proposals[_id].owner == msg.sender);
+        delete proposals[_id];
+    }
+    //a voir si on fait function delete proposal aussi pour l'admin
+    function deleteProposalAdmin(uint256 _id) public onlyOwner {
         delete proposals[_id];
     }
 
@@ -141,18 +142,28 @@ contract Voting is Ownable {
         require(status == WorkflowStatus.VotingSessionEnded);
         uint8 id;
         uint256 highestCount;
+        uint8[] storage winners;
 
-        for (uint256 i = 0; i < proposalIds; i++) {
+        for (uint256 i = 0; i <= proposalIds; i++) {
             if (highestCount < proposals[i].voteCount) {
+                highestCount = proposals[i].voteCount;
                 id = proposals[i].id;
-            }
-            ///@dev à voir les cas particuliers où plusieurs gagnants
-        }
-        winningProposalId = id;
-        emit VotesTallied();
-        status = WorkflowStatus.VotesTallied;
-    }
 
+                // new solution with array
+                if (winners.length >= 1) {
+                    winners.pop();
+                }
+                winners.push(proposals[i].id);
+                ///@dev à voir les cas particuliers où plusieurs gagnants
+            } else if (highestCount == proposals[i].voteCount){
+                winners.push(proposals[i].id);
+            }
+        winningProposalId = winners;
+
+        status = WorkflowStatus.VotesTallied;
+        emit VotesTallied(winningProposalId);   
+  }
+    }
     ///@return le statut en cours du vote
-    function getEnum() public view returns (WorkflowStatus) {}
+    function getEnum() public view returns(WorkflowStatus) {}
 }
