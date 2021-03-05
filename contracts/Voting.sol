@@ -15,7 +15,7 @@ contract Voting is Ownable {
     uint8[] public winningProposalId;
 
     //increment d'ids
-    uint8 proposalIds;
+    uint8 public proposalIds;
 
     struct Voter {
         bool isRegistered;
@@ -83,7 +83,7 @@ contract Voting is Ownable {
         delete whiteList[_address];
     }
 
-    function startProposalRegistration() public onlyOwner {
+    function startProposalRegistration() public onlyOwner   {
         status = WorkflowStatus.ProposalsRegistrationStarted;
         emit ProposalsRegistrationStarted();
     }
@@ -113,12 +113,12 @@ contract Voting is Ownable {
     function addProposal(string memory _description) public whiteListed {
         //obligation d'être dans le workflow correspondant
         //deux propositions identiques sont possibles à voir...
-        require(status == WorkflowStatus.ProposalsRegistrationStarted);
+        require(status == WorkflowStatus.ProposalsRegistrationStarted, "Proposals session has not started");
         Proposal memory newProposal =
         Proposal(proposalIds, msg.sender, _description, 0);
         proposals[proposalIds] = newProposal;
-        emit ProposalRegistered(proposalIds);
         proposalIds++;
+        emit ProposalRegistered(proposalIds);
     }
 
     function deleteProposal(uint256 _id) public whiteListed {
