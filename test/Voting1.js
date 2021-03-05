@@ -23,5 +23,9 @@ contract("Voting", accounts => {
     await truffleAssert.reverts(contractInstance.addVoter(account1, {
       'from': accounts[1]}))
 });
-
+ /* tests:
+          ajout d'une nouvelle proposition
+          voting si pas dans la liste
+          les require en fonction du workflow
+           */
 })
