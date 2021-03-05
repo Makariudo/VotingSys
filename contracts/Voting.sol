@@ -12,7 +12,7 @@ import "./Ownable.sol";
  */
 
 contract Voting is Ownable {
-    uint8[] public winningProposalId;
+    uint8 public winningProposalId;
 
     //increment d'ids
     uint8 public proposalIds;
@@ -56,7 +56,7 @@ contract Voting is Ownable {
     event VotingSessionStarted();
     event VotingSessionEnded();
     event Voted(address voter, uint256 proposalId);
-    event VotesTallied(uint8[] _winningProposals);
+    event VotesTallied(uint8 _winningProposals);
     event WorkflowStatusChange(
         WorkflowStatus previousStatus,
         WorkflowStatus newStatus
@@ -68,7 +68,7 @@ contract Voting is Ownable {
 
     function getWinningProposal() public view returns (Proposal memory proposal){
       //a voir en cas de plusieurs gagnnats boucle ->
-        return proposals[winningProposalId[0]];
+        return proposals[winningProposalId];
     }
 
     ///@param _address à ajouter à la whitelist
@@ -84,28 +84,41 @@ contract Voting is Ownable {
     }
 
     function startProposalRegistration() public onlyOwner   {
+        WorkflowStatus previous = status;
         status = WorkflowStatus.ProposalsRegistrationStarted;
         emit ProposalsRegistrationStarted();
+        WorkflowStatus newStatus = WorkflowStatus.ProposalsRegistrationStarted;
+        emit WorkflowStatusChange(previous, newStatus);
     }
 
     function endProposalRegistration() public onlyOwner {
-        status = WorkflowStatus.ProposalsRegistrationEnded;
+        WorkflowStatus previous = status;
+        WorkflowStatus newStatus = WorkflowStatus.ProposalsRegistrationEnded;
+        status = newStatus;
         emit ProposalsRegistrationEnded();
+      
+        emit WorkflowStatusChange(previous, newStatus);
     }
 
     function startVotingSession() public onlyOwner {
-        status = WorkflowStatus.VotingSessionStarted;
-        emit VotingSessionStarted();
+        WorkflowStatus previous = status;
+        WorkflowStatus newStatus = WorkflowStatus.VotingSessionStarted;
+        status = newStatus;
+        emit VotingSessionEnded();
+        emit WorkflowStatusChange(previous, newStatus);
     }
 
     function endVotingSession() public onlyOwner {
-        status = WorkflowStatus.VotingSessionEnded;
+        WorkflowStatus previous = status;
+        WorkflowStatus newStatus = WorkflowStatus.VotingSessionEnded;
+        status = newStatus;
         emit VotingSessionEnded();
+        emit WorkflowStatusChange(previous, newStatus);
     }
 
     ///@dev Verification de la présence de l'address dans la whitelist
     modifier whiteListed() {
-        require(whiteList[msg.sender].isRegistered == true);
+        require(whiteList[msg.sender].isRegistered == true, "voter not whitelisted");
         _;
     }
 
@@ -142,28 +155,16 @@ contract Voting is Ownable {
         require(status == WorkflowStatus.VotingSessionEnded);
         uint8 id;
         uint256 highestCount;
-        uint8[] storage winners;
-
         for (uint256 i = 0; i <= proposalIds; i++) {
             if (highestCount < proposals[i].voteCount) {
                 highestCount = proposals[i].voteCount;
                 id = proposals[i].id;
-
-                // new solution with array
-                if (winners.length >= 1) {
-                    winners.pop();
-                }
-                winners.push(proposals[i].id);
-                ///@dev à voir les cas particuliers où plusieurs gagnants
-            } else if (highestCount == proposals[i].voteCount){
-                winners.push(proposals[i].id);
             }
-        winningProposalId = winners;
 
+        }
+        winningProposalId = id;
         status = WorkflowStatus.VotesTallied;
         emit VotesTallied(winningProposalId);   
-  }
     }
-    ///@return le statut en cours du vote
-    function getEnum() public view returns(WorkflowStatus) {}
+
 }
