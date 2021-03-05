@@ -28,9 +28,9 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.7.4+commit.3f05b770\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"get\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"x\",\"type\":\"uint256\"}],\"name\":\"set\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/C/work_store/blockchain_work/voting/defiTest/contracts/SimpleStorage.sol\":\"SimpleStorage\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/work_store/blockchain_work/voting/defiTest/contracts/SimpleStorage.sol\":{\"keccak256\":\"0x6cd22b52aa6c1a654cefe6866abe4f07b066f0709e5a70f912613f6bc81ecd75\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5e0b31e9236fcaa909ba05dbdd66c1c26a64824728436ea97e0c06b43aeb4b2f\",\"dweb:/ipfs/QmPpCHr3dTWoVVvXxePbttRh8Shmavc9wifgTuqK2AEgFg\"]}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b5060c78061001f6000396000f3fe6080604052348015600f57600080fd5b506004361060325760003560e01c806360fe47b11460375780636d4ce63c146062575b600080fd5b606060048036036020811015604b57600080fd5b8101908080359060200190929190505050607e565b005b60686088565b6040518082815260200191505060405180910390f35b8060008190555050565b6000805490509056fea2646970667358221220cc6fef86966a8b9d4579c0fb7eeca0c029d298ec7f09fb69a02c9baa9235c05664736f6c63430007040033",
-  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060325760003560e01c806360fe47b11460375780636d4ce63c146062575b600080fd5b606060048036036020811015604b57600080fd5b8101908080359060200190929190505050607e565b005b60686088565b6040518082815260200191505060405180910390f35b8060008190555050565b6000805490509056fea2646970667358221220cc6fef86966a8b9d4579c0fb7eeca0c029d298ec7f09fb69a02c9baa9235c05664736f6c63430007040033",
+  "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"get\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"x\",\"type\":\"uint256\"}],\"name\":\"set\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/C/work_store/blockchain_work/voting/defiTest/contracts/SimpleStorage.sol\":\"SimpleStorage\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/work_store/blockchain_work/voting/defiTest/contracts/SimpleStorage.sol\":{\"keccak256\":\"0x6cd22b52aa6c1a654cefe6866abe4f07b066f0709e5a70f912613f6bc81ecd75\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5e0b31e9236fcaa909ba05dbdd66c1c26a64824728436ea97e0c06b43aeb4b2f\",\"dweb:/ipfs/QmPpCHr3dTWoVVvXxePbttRh8Shmavc9wifgTuqK2AEgFg\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5060c78061001f6000396000f3fe6080604052348015600f57600080fd5b506004361060325760003560e01c806360fe47b11460375780636d4ce63c146062575b600080fd5b606060048036036020811015604b57600080fd5b8101908080359060200190929190505050607e565b005b60686088565b6040518082815260200191505060405180910390f35b8060008190555050565b6000805490509056fea2646970667358221220bba2fbd862eda224949d8186efe8ef5a9a98d6380bfcf70f3b3298b6433da62064736f6c63430007060033",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060325760003560e01c806360fe47b11460375780636d4ce63c146062575b600080fd5b606060048036036020811015604b57600080fd5b8101908080359060200190929190505050607e565b005b60686088565b6040518082815260200191505060405180910390f35b8060008190555050565b6000805490509056fea2646970667358221220bba2fbd862eda224949d8186efe8ef5a9a98d6380bfcf70f3b3298b6433da62064736f6c63430007060033",
   "immutableReferences": {},
   "generatedSources": [],
   "deployedGeneratedSources": [],
@@ -588,7 +588,7 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.7.4+commit.3f05b770.Emscripten.clang"
+    "version": "0.7.6+commit.7338295f.Emscripten.clang"
   },
   "networks": {
     "1337": {
@@ -605,7 +605,7 @@
     }
   },
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-03-02T22:54:59.275Z",
+  "updatedAt": "2021-03-05T09:12:53.766Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
