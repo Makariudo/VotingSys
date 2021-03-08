@@ -32,6 +32,7 @@ contract Voting is Ownable {
         uint256 voteCount;
     }
 
+    /// TODO faire un mapping de uint mapping address=>voter pour le front et l'indexation
     mapping(address => Voter) public whiteList;
 
     mapping(uint256 => Proposal) public proposals;
@@ -96,7 +97,6 @@ contract Voting is Ownable {
         WorkflowStatus newStatus = WorkflowStatus.ProposalsRegistrationEnded;
         status = newStatus;
         emit ProposalsRegistrationEnded();
-      
         emit WorkflowStatusChange(previous, newStatus);
     }
 

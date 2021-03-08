@@ -68,7 +68,7 @@ contract("Voting", accounts => {
     context("startVotingSession", () => {
       // await votingInstance.startVotingSession({ from: owner });
       //await votingInstance.addProposal(proposal, { from: whitelisted })
-      it("should fail to start voting session if not owner", () => {
+      it("should fail to start voting session if not owner", async () => {
         await truffleAssert.reverts(votingInstance.startVotingSession({
           from: account2 }))
       })
